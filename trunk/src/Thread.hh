@@ -61,7 +61,7 @@ namespace artemis
 	pthread_exit(_this->run());  
 	return 0; 
       }
-  };
+    };
   }
 }
 
