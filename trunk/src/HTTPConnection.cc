@@ -27,27 +27,22 @@
 #define BUFFER_SIZE 10000
 
 HTTPD::HTTPConnection::HTTPConnection(int fd, HTTPD::HTTPContentManager * contentManager)
-  : _socketfd(fd),
+  : artemis::util::Thread(),
+    _socketfd(fd),
     _contentManager(contentManager)
 {
-  // print out connection informations
-  //  printf("server: got connection from %s\n", inet_ntoa(_client_addr.sin_addr));
-
-  // create thread
-  pthread_create(&_thread, NULL, HTTPD::HTTPConnection::thread_call, this);
+  // start thread
+  start();
 }
 
 HTTPD::HTTPConnection::~HTTPConnection()
 {
   // close socket
   close(_socketfd);
-
-  // free thread
-  pthread_detach(_thread);
 }
 
 void *
-HTTPD::HTTPConnection::proceed()
+HTTPD::HTTPConnection::run()
 {
   // receive request
   HTTPD::HTTPRequest * request = receiveRequest();

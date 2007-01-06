@@ -77,6 +77,8 @@ HTTPD::HTTPServer::start()
   struct sockaddr_in client_addr; // connector's address information
   int new_fd;
 
+  HTTPD::HTTPConnection * connection;
+
   while(true) 
     {
       std::cout << "HTTPServer::start() A" << std::endl;
@@ -89,7 +91,7 @@ HTTPD::HTTPServer::start()
 	  continue;
 	}
 
-      new HTTPD::HTTPConnection(new_fd, _contentManager);
+      connection = new HTTPD::HTTPConnection(new_fd, _contentManager);
     }
 }
 

@@ -25,33 +25,26 @@
 #include <iostream>
 #include <arpa/inet.h>
 
-#include <pthread.h>
-
+#include "Thread.hh"
 #include "HTTPRequest.hh"
 #include "HTTPContentManager.hh"
 
 namespace HTTPD
 {
-  class HTTPConnection
+  class HTTPConnection : artemis::util::Thread
   {
   public:
     HTTPConnection(int fd, HTTPD::HTTPContentManager * contentManager);
-
     ~HTTPConnection();
-    void * proceed();
+
+  protected:
+    void * run();
 
   private:
     int _socketfd;
     HTTPD::HTTPContentManager * _contentManager;
 
     HTTPD::HTTPRequest * receiveRequest();
-
-    pthread_t _thread;
-
-    static void* thread_call(void* _this) 
-    { 
-      return ((HTTPConnection*)_this)->proceed(); 
-    }
   };
 }
 
