@@ -26,7 +26,7 @@
 
 #define BUFFER_SIZE 10000
 
-HTTPD::HTTPConnection::HTTPConnection(int fd, HTTPD::HTTPContentManager * contentManager)
+artemis::httpd::HTTPConnection::HTTPConnection(int fd, artemis::httpd::HTTPContentManager * contentManager)
   : artemis::util::Thread(),
     _socketfd(fd),
     _contentManager(contentManager)
@@ -35,20 +35,20 @@ HTTPD::HTTPConnection::HTTPConnection(int fd, HTTPD::HTTPContentManager * conten
   start();
 }
 
-HTTPD::HTTPConnection::~HTTPConnection()
+artemis::httpd::HTTPConnection::~HTTPConnection()
 {
   // close socket
   close(_socketfd);
 }
 
 void *
-HTTPD::HTTPConnection::run()
+artemis::httpd::HTTPConnection::run()
 {
   // receive request
-  HTTPD::HTTPRequest * request = receiveRequest();
+  artemis::httpd::HTTPRequest * request = receiveRequest();
 
   // get response from content handler
-  HTTPD::HTTPResponse * response = _contentManager->handleRequest(request);
+  artemis::httpd::HTTPResponse * response = _contentManager->handleRequest(request);
 
   // send response
   char * response_str = response->getResponseString();
@@ -68,8 +68,8 @@ HTTPD::HTTPConnection::run()
   return 0;
 }
 
-HTTPD::HTTPRequest *
-HTTPD::HTTPConnection::receiveRequest()
+artemis::httpd::HTTPRequest *
+artemis::httpd::HTTPConnection::receiveRequest()
 {
   std::string result;
 
@@ -90,5 +90,5 @@ HTTPD::HTTPConnection::receiveRequest()
         again = false;
     }
 
-  return new HTTPD::HTTPRequest(result);
+  return new artemis::httpd::HTTPRequest(result);
 }

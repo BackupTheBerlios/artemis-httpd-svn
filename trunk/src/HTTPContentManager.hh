@@ -26,23 +26,26 @@
 
 #include <map>
 
-namespace HTTPD
+namespace artemis
 {
-  class HTTPContentManager
+  namespace httpd
   {
-  public:
-    HTTPContentManager();
-    ~HTTPContentManager();
+    class HTTPContentManager
+    {
+    public:
+      HTTPContentManager();
+      ~HTTPContentManager();
 
-    void addFileContent(std::string request, std::string filename);
-    void addDirectoryContent(std::string request, std::string directory);
-    void addDynamicContent(std::string request);
+      void addFileContent(std::string request, std::string filename);
+      void addDirectoryContent(std::string request, std::string directory);
+      void addDynamicContent(std::string request);
 
-    HTTPD::HTTPResponse * handleRequest(HTTPD::HTTPRequest * request);
+      artemis::httpd::HTTPResponse * handleRequest(artemis::httpd::HTTPRequest * request);
 
-  private:
-    std::map<std::string, std::string> * _contentMap;
-  };
+    private:
+      std::map<std::string, std::string> * _contentMap;
+    };
+  }
 }
 
 #endif

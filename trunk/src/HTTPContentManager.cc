@@ -20,37 +20,37 @@
 
 #include "HTTPContentManager.hh"
 
-HTTPD::HTTPContentManager::HTTPContentManager()
+artemis::httpd::HTTPContentManager::HTTPContentManager()
 {
   _contentMap = new std::map<std::string, std::string>();
 }
 
-HTTPD::HTTPContentManager::~HTTPContentManager()
+artemis::httpd::HTTPContentManager::~HTTPContentManager()
 {
   delete _contentMap;
 }
 
 void 
-HTTPD::HTTPContentManager::addFileContent(std::string request, std::string filename)
+artemis::httpd::HTTPContentManager::addFileContent(std::string request, std::string filename)
 {
   (*_contentMap)[request] = filename;
 }
 
 void 
-HTTPD::HTTPContentManager::addDirectoryContent(std::string request, std::string directory)
+artemis::httpd::HTTPContentManager::addDirectoryContent(std::string request, std::string directory)
 {
   (*_contentMap)[request] = directory;
 }
 
 void 
-HTTPD::HTTPContentManager::addDynamicContent(std::string request)
+artemis::httpd::HTTPContentManager::addDynamicContent(std::string request)
 {
 }
 
-HTTPD::HTTPResponse * 
-HTTPD::HTTPContentManager::handleRequest(HTTPD::HTTPRequest * request)
+artemis::httpd::HTTPResponse * 
+artemis::httpd::HTTPContentManager::handleRequest(artemis::httpd::HTTPRequest * request)
 {
-  HTTPD::HTTPResponse * response = new HTTPD::HTTPResponse(HTTP_RESPONSE_CODE_OKAY);
+  artemis::httpd::HTTPResponse * response = new artemis::httpd::HTTPResponse(HTTP_RESPONSE_CODE_OKAY);
   std::string content = "<html>\n<head><title>Test</title></head></html>";
   response->addContent(content);
   return response;

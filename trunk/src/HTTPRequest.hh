@@ -24,46 +24,49 @@
 #include <string>
 #include <map>
 
-namespace HTTPD
+namespace artemis
 {
-  enum RequestMethod
-    {
-      GET,
-      HEAD,
-      POST
-    };
-
-  enum HTTPVersion
-    {
-      HTTP_0_9,
-      HTTP_1_0,
-      HTTP_1_1
-    };
-
-  class HTTPRequest
+  namespace httpd
   {
-  public:
-    HTTPRequest(std::string & request_str);
-    ~HTTPRequest();
+    enum RequestMethod
+      {
+	GET,
+	HEAD,
+	POST
+      };
 
-    std::string getRequestURI();
+    enum HTTPVersion
+      {
+	HTTP_0_9,
+	HTTP_1_0,
+	HTTP_1_1
+      };
 
-  private:
-    // request fields
-    RequestMethod _requestMethod;
-    std::string _requestURI;
-    HTTPVersion _httpVersion;
-    std::map<std::string, std::string> _headerFields;
-    std::string _messageBody;
+    class HTTPRequest
+    {
+    public:
+      HTTPRequest(std::string & request_str);
+      ~HTTPRequest();
 
-    // parsing functions
-    void parseRequestLine(std::string & request_str);
-    void parseHeaderFields(std::string & request_str);
+      std::string getRequestURI();
 
-    // parsing helper functions
-    std::string cutOutSequence(std::string & str, bool firstlast, std::string delimeter);
-    void trim(std::string & str);
-  };
+    private:
+      // request fields
+      artemis::httpd::RequestMethod _requestMethod;
+      std::string _requestURI;
+      artemis::httpd::HTTPVersion _httpVersion;
+      std::map<std::string, std::string> _headerFields;
+      std::string _messageBody;
+
+      // parsing functions
+      void parseRequestLine(std::string & request_str);
+      void parseHeaderFields(std::string & request_str);
+
+      // parsing helper functions
+      std::string cutOutSequence(std::string & str, bool firstlast, std::string delimeter);
+      void trim(std::string & str);
+    };
+  }
 }
 
 #endif

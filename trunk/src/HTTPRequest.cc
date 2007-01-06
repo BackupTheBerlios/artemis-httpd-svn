@@ -22,7 +22,7 @@
 
 #include <iostream>
 
-HTTPD::HTTPRequest::HTTPRequest(std::string & request_str)
+artemis::httpd::HTTPRequest::HTTPRequest(std::string & request_str)
 {
   // temp string for parsing, because parser eats it up
   std::string parseString = request_str;
@@ -33,19 +33,19 @@ HTTPD::HTTPRequest::HTTPRequest(std::string & request_str)
   _messageBody = parseString;
 }
 
-HTTPD::HTTPRequest::~HTTPRequest()
+artemis::httpd::HTTPRequest::~HTTPRequest()
 {
 
 }
 
 std::string 
-HTTPD::HTTPRequest::getRequestURI()
+artemis::httpd::HTTPRequest::getRequestURI()
 {
   return _requestURI;
 }
 
 void 
-HTTPD::HTTPRequest::parseRequestLine(std::string & request_str)
+artemis::httpd::HTTPRequest::parseRequestLine(std::string & request_str)
 {
   std::string requestLine = cutOutSequence(request_str, true, "\r\n");
 
@@ -89,7 +89,7 @@ HTTPD::HTTPRequest::parseRequestLine(std::string & request_str)
 }
 
 void
-HTTPD::HTTPRequest::parseHeaderFields(std::string & request_str)
+artemis::httpd::HTTPRequest::parseHeaderFields(std::string & request_str)
 {
   std::string headerLine = cutOutSequence(request_str, true, "\r\n");
 
@@ -103,7 +103,7 @@ HTTPD::HTTPRequest::parseHeaderFields(std::string & request_str)
 }
 
 std::string
-HTTPD::HTTPRequest::cutOutSequence(std::string & str, bool firstlast, std::string delimeter)
+artemis::httpd::HTTPRequest::cutOutSequence(std::string & str, bool firstlast, std::string delimeter)
 {
   std::string::size_type pos;
   if (firstlast)
@@ -137,7 +137,7 @@ HTTPD::HTTPRequest::cutOutSequence(std::string & str, bool firstlast, std::strin
 }
 
 void
-HTTPD::HTTPRequest::trim(std::string & str)
+artemis::httpd::HTTPRequest::trim(std::string & str)
 {
   std::string::size_type pos = str.find_last_not_of(' ');
   if(pos != std::string::npos) {

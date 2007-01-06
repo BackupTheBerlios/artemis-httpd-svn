@@ -27,27 +27,30 @@
 
 #include "HTTPContentManager.hh"
 
-namespace HTTPD
+namespace artemis
 {
-  class HTTPServer
+  namespace httpd
   {
-  public:
-    HTTPServer(int port);
-    ~HTTPServer();
+    class HTTPServer
+    {
+    public:
+      HTTPServer(int port);
+      ~HTTPServer();
+      
+      void start();
+      
+      void addFileContent(std::string request, std::string filename);
+      void addDirectoryContent(std::string request, std::string directory);
+      void addDynamicContent(std::string request);
+      
+    private:
+      int _socketfd;
+      int _yes;
+      struct sockaddr_in _local_in_addr;
 
-    void start();
-
-    void addFileContent(std::string request, std::string filename);
-    void addDirectoryContent(std::string request, std::string directory);
-    void addDynamicContent(std::string request);
-
-  private:
-    int _socketfd;
-    int _yes;
-    struct sockaddr_in _local_in_addr;
-
-    HTTPD::HTTPContentManager * _contentManager;
-  };
+      artemis::httpd::HTTPContentManager * _contentManager;
+    };
+  }
 }
 
 #endif

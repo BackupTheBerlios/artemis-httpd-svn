@@ -23,36 +23,39 @@
 
 #include <string>
 
-namespace HTTPD
+namespace artemis
 {
-  enum HTTPResponseCode
-    {
-      HTTP_RESPONSE_CODE_OKAY,
-      HTTP_RESPONSE_CODE_NOT_FOUND
-    };
-
-  class HTTPResponse
+  namespace httpd
   {
-  public:
-    HTTPResponse(HTTPResponseCode httpResponseCode);
-    ~HTTPResponse();
+    enum HTTPResponseCode
+      {
+	HTTP_RESPONSE_CODE_OKAY,
+	HTTP_RESPONSE_CODE_NOT_FOUND
+      };
 
-    void addContent(const char * content, long length);
-    void addContent(std::string & content);
+    class HTTPResponse
+    {
+    public:
+      HTTPResponse(HTTPResponseCode httpResponseCode);
+      ~HTTPResponse();
 
-    char * getResponseString();
-    size_t getResponseLength();
+      void addContent(const char * content, long length);
+      void addContent(std::string & content);
 
-  private:
-    HTTPD::HTTPResponseCode _httpResponseCode;
+      char * getResponseString();
+      size_t getResponseLength();
 
-    char * _httpResponseContent;
+    private:
+      artemis::httpd::HTTPResponseCode _httpResponseCode;
 
-    long _httpResponseContentLength;
-    long _httpResponseLength;
+      char * _httpResponseContent;
 
-    std::string * getResponseHeader();
-  };
+      long _httpResponseContentLength;
+      long _httpResponseLength;
+
+      std::string * getResponseHeader();
+    };
+  }
 }
 
 #endif

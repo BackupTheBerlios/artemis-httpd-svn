@@ -22,7 +22,7 @@
 
 #include <iostream>
 
-HTTPD::HTTPResponse::HTTPResponse(HTTPResponseCode httpResponseCode)
+artemis::httpd::HTTPResponse::HTTPResponse(HTTPResponseCode httpResponseCode)
   : _httpResponseCode(httpResponseCode),
     _httpResponseContent(0),
     _httpResponseContentLength(0),
@@ -30,14 +30,14 @@ HTTPD::HTTPResponse::HTTPResponse(HTTPResponseCode httpResponseCode)
 {
 }
 
-HTTPD::HTTPResponse::~HTTPResponse()
+artemis::httpd::HTTPResponse::~HTTPResponse()
 {
   if (_httpResponseContent)
     delete [] _httpResponseContent;
 }
 
 void
-HTTPD::HTTPResponse::addContent(const char * content, long length)
+artemis::httpd::HTTPResponse::addContent(const char * content, long length)
 {
   _httpResponseContentLength = length;
   _httpResponseContent = new char[_httpResponseContentLength];
@@ -46,7 +46,7 @@ HTTPD::HTTPResponse::addContent(const char * content, long length)
 }
 
 void
-HTTPD::HTTPResponse::addContent(std::string & content)
+artemis::httpd::HTTPResponse::addContent(std::string & content)
 {
   _httpResponseContentLength = content.size();
   _httpResponseContent = new char[_httpResponseContentLength + 1];
@@ -55,7 +55,7 @@ HTTPD::HTTPResponse::addContent(std::string & content)
 }
 
 char * 
-HTTPD::HTTPResponse::getResponseString()
+artemis::httpd::HTTPResponse::getResponseString()
 {
   std::string * response_header = getResponseHeader();
 
@@ -77,13 +77,13 @@ HTTPD::HTTPResponse::getResponseString()
 }
 
 size_t
-HTTPD::HTTPResponse::getResponseLength()
+artemis::httpd::HTTPResponse::getResponseLength()
 {
   return _httpResponseLength;
 }
 
 std::string * 
-HTTPD::HTTPResponse::getResponseHeader()
+artemis::httpd::HTTPResponse::getResponseHeader()
 {
   std::string * response = new std::string();
 

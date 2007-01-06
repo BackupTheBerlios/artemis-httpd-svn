@@ -29,9 +29,9 @@
 
 #define BUFFER_SIZE 100
 
-HTTPD::HTTPServer::HTTPServer(int port)
+artemis::httpd::HTTPServer::HTTPServer(int port)
 {
-  _contentManager = new HTTPD::HTTPContentManager();
+  _contentManager = new artemis::httpd::HTTPContentManager();
 
   _yes = 1; // ????
 
@@ -64,20 +64,20 @@ HTTPD::HTTPServer::HTTPServer(int port)
 
 }
 
-HTTPD::HTTPServer::~HTTPServer()
+artemis::httpd::HTTPServer::~HTTPServer()
 {
   if (_contentManager)
     delete _contentManager;
 }
 
 void 
-HTTPD::HTTPServer::start()
+artemis::httpd::HTTPServer::start()
 {
   socklen_t sin_size;
   struct sockaddr_in client_addr; // connector's address information
   int new_fd;
 
-  HTTPD::HTTPConnection * connection;
+  artemis::httpd::HTTPConnection * connection;
 
   while(true) 
     {
@@ -91,24 +91,24 @@ HTTPD::HTTPServer::start()
 	  continue;
 	}
 
-      connection = new HTTPD::HTTPConnection(new_fd, _contentManager);
+      connection = new artemis::httpd::HTTPConnection(new_fd, _contentManager);
     }
 }
 
 void
-HTTPD::HTTPServer::addFileContent(std::string request, std::string filename)
+artemis::httpd::HTTPServer::addFileContent(std::string request, std::string filename)
 {
   _contentManager->addFileContent(request, filename);
 }
 
 void
-HTTPD::HTTPServer::addDirectoryContent(std::string request, std::string directory)
+artemis::httpd::HTTPServer::addDirectoryContent(std::string request, std::string directory)
 {
   _contentManager->addDirectoryContent(request, directory);
 }
 
 void
-HTTPD::HTTPServer::addDynamicContent(std::string request)
+artemis::httpd::HTTPServer::addDynamicContent(std::string request)
 {
   _contentManager->addDynamicContent(request);
 }

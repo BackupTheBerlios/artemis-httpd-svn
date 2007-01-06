@@ -29,23 +29,26 @@
 #include "HTTPRequest.hh"
 #include "HTTPContentManager.hh"
 
-namespace HTTPD
+namespace artemis
 {
-  class HTTPConnection : artemis::util::Thread
+  namespace httpd
   {
-  public:
-    HTTPConnection(int fd, HTTPD::HTTPContentManager * contentManager);
-    ~HTTPConnection();
+    class HTTPConnection : artemis::util::Thread
+    {
+    public:
+      HTTPConnection(int fd, artemis::httpd::HTTPContentManager * contentManager);
+      ~HTTPConnection();
 
-  protected:
-    void * run();
+    protected:
+      void * run();
 
-  private:
-    int _socketfd;
-    HTTPD::HTTPContentManager * _contentManager;
-
-    HTTPD::HTTPRequest * receiveRequest();
-  };
+    private:
+      int _socketfd;
+      artemis::httpd::HTTPContentManager * _contentManager;
+      
+      artemis::httpd::HTTPRequest * receiveRequest();
+    };
+  }
 }
 
 #endif
