@@ -42,7 +42,6 @@ namespace artemis
 
       virtual ~Thread()
       {
-	pthread_detach(_thread);
       }
 
     protected:
@@ -50,7 +49,13 @@ namespace artemis
 
       void start()
       {
-	pthread_create(&_thread, 0, (thread_fct) thread_call, this);
+	pthread_attr_t attr;
+	pthread_attr_init(&attr);
+	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+
+	pthread_create(&_thread, &attr, (thread_fct) thread_call, this);
+
+	pthread_attr_destroy(&attr);
       }
 
     private:
