@@ -18,11 +18,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef HTTPD_HTTPCONTENTMANAGER_HH
-#define HTTPD_HTTPCONTENTMANAGER_HH
+#ifndef ARTEMIS_HTTPD_HTTPCONTENTMANAGER_HH
+#define ARTEMIS_HTTPD_HTTPCONTENTMANAGER_HH
 
 #include "HTTPRequest.hh"
 #include "HTTPResponse.hh"
+#include "HTTPContentHandler.hh"
 
 #include <map>
 
@@ -38,7 +39,7 @@ namespace artemis
 
       void addFileContent(std::string request, std::string filename);
       void addDirectoryContent(std::string request, std::string directory);
-      void addDynamicContent(std::string request);
+      void addContentHandler(std::string request, artemis::httpd::HTTPContentHandler * contentHandler);
 
       artemis::httpd::HTTPResponse * handleRequest(artemis::httpd::HTTPRequest * request);
 

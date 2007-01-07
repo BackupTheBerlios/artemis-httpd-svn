@@ -43,7 +43,7 @@ artemis::httpd::HTTPContentManager::addDirectoryContent(std::string request, std
 }
 
 void 
-artemis::httpd::HTTPContentManager::addDynamicContent(std::string request)
+artemis::httpd::HTTPContentManager::addContentHandler(std::string request, artemis::httpd::HTTPContentHandler * contentHandler)
 {
 }
 

@@ -108,7 +108,7 @@ artemis::httpd::HTTPServer::addDirectoryContent(std::string request, std::string
 }
 
 void
-artemis::httpd::HTTPServer::addDynamicContent(std::string request)
+artemis::httpd::HTTPServer::addContentHandler(std::string request, artemis::httpd::HTTPContentHandler * contentHandler)
 {
-  _contentManager->addDynamicContent(request);
+  _contentManager->addContentHandler(request, contentHandler);
 }

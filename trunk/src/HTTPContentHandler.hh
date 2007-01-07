@@ -18,37 +18,25 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef HTTPD_HTTPSERVER_HH
-#define HTTPD_HTTPSERVER_HH
+#ifndef ARTEMIS_HTTPD_HTTPCONTENTHANDLER_HH
+#define ARTEMIS_HTTPD_HTTPCONTENTHANDLER_HH
 
-#include <string>
-
-#include <arpa/inet.h>
-
-#include "HTTPContentManager.hh"
+#include "HTTPRequest.hh"
+#include "HTTPResponse.hh"
 
 namespace artemis
 {
   namespace httpd
   {
-    class HTTPServer
+    class HTTPContentHandler
     {
     public:
-      HTTPServer(int port);
-      ~HTTPServer();
-      
-      void start();
-      
-      void addFileContent(std::string request, std::string filename);
-      void addDirectoryContent(std::string request, std::string directory);
-      void addContentHandler(std::string request, artemis::httpd::HTTPContentHandler * contentHandler);
-      
-    private:
-      int _socketfd;
-      int _yes;
-      struct sockaddr_in _local_in_addr;
+      virtual ~HTTPContentHandler()
+      {
+      }
 
-      artemis::httpd::HTTPContentManager * _contentManager;
+      virtual artemis::httpd::HTTPResponse * handleRequest(const artemis::httpd::HTTPRequest & request) = 0;
+
     };
   }
 }
