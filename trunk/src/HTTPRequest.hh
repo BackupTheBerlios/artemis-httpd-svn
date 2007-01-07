@@ -18,8 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef HTTPD_HTTPREQUEST_HH
-#define HTTPD_HTTPREQUEST_HH
+#ifndef ARTEMIS_HTTPD_HTTPREQUEST_HH
+#define ARTEMIS_HTTPD_HTTPREQUEST_HH
 
 #include <string>
 #include <map>
@@ -55,6 +55,7 @@ namespace artemis
       artemis::httpd::RequestMethod _requestMethod;
       std::string _requestURI;
       artemis::httpd::HTTPVersion _httpVersion;
+
       std::map<std::string, std::string> _headerFields;
       std::string _messageBody;
 
