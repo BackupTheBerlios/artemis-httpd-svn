@@ -18,8 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef HTTPD_HTTPSERVER_HH
-#define HTTPD_HTTPSERVER_HH
+#ifndef ARTEMIS_HTTPD_HTTPSERVER_HH
+#define ARTEMIS_HTTPD_HTTPSERVER_HH
 
 #include <string>
 
