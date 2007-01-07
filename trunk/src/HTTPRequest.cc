@@ -39,7 +39,7 @@ artemis::httpd::HTTPRequest::~HTTPRequest()
 }
 
 std::string 
-artemis::httpd::HTTPRequest::getRequestURI()
+artemis::httpd::HTTPRequest::getRequestURI() const
 {
   return _requestURI;
 }

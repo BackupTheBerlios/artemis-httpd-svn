@@ -48,7 +48,7 @@ artemis::httpd::HTTPConnection::run()
   artemis::httpd::HTTPRequest * request = receiveRequest();
 
   // get response from content handler
-  artemis::httpd::HTTPResponse * response = _contentManager->handleRequest(request);
+  artemis::httpd::HTTPResponse * response = _contentManager->handleRequest(*request);
 
   // send response
   char * response_str = response->getResponseString();

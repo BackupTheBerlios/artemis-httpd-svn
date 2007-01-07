@@ -21,9 +21,11 @@
 #include "HTTPResponse.hh"
 
 #include <iostream>
+#include <sstream>
 
-artemis::httpd::HTTPResponse::HTTPResponse(HTTPResponseCode httpResponseCode)
+artemis::httpd::HTTPResponse::HTTPResponse(HTTPResponseCode httpResponseCode, HTTPContentType httpContentType)
   : _httpResponseCode(httpResponseCode),
+    _httpContentType(httpContentType),
     _httpResponseContent(0),
     _httpResponseContentLength(0),
     _httpResponseLength(0)
@@ -42,7 +44,7 @@ artemis::httpd::HTTPResponse::addContent(const char * content, long length)
   _httpResponseContentLength = length;
   _httpResponseContent = new char[_httpResponseContentLength];
 
-  strcpy(_httpResponseContent, content);
+  memcpy(_httpResponseContent, content, _httpResponseContentLength);
 }
 
 void
@@ -100,6 +102,25 @@ artemis::httpd::HTTPResponse::getResponseHeader()
     default:
       response->append("500 Internal Server Error\n");
       break;
+    }
+
+  switch(_httpContentType)
+    {
+    case TEXT_HTML:
+      response->append("Content-type: text/html\n");
+      break;
+    case IMAGE_JPEG:
+      response->append("Content-type: image/jpeg\n");
+      break;
+    default:
+      break;
+    }
+
+  if (_httpResponseContent)
+    {
+      std::ostringstream ss;
+      ss << _httpResponseContentLength;
+      response->append("Content-length: " + ss.str() + "\n");
     }
 
   // ...

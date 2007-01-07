@@ -18,49 +18,25 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef HTTPD_HTTPRESPONSE_HH
-#define HTTPD_HTTPRESPONSE_HH
+#ifndef ARTEMIS_HTTPD_FILECONTENTHANDLER_HH
+#define ARTEMIS_HTTPD_FILECONTENTHANDLER_HH
 
-#include <string>
+#include "HTTPContentHandler.hh"
 
 namespace artemis
 {
   namespace httpd
   {
-    enum HTTPResponseCode
-      {
-	HTTP_RESPONSE_CODE_OKAY,
-	HTTP_RESPONSE_CODE_NOT_FOUND
-      };
-
-    enum HTTPContentType
-      {
-	TEXT_HTML,
-	IMAGE_JPEG
-      };
-
-    class HTTPResponse
+    class HTTPFileContentHandler : public artemis::httpd::HTTPContentHandler
     {
     public:
-      HTTPResponse(HTTPResponseCode httpResponseCode, HTTPContentType httpContentType);
-      ~HTTPResponse();
-
-      void addContent(const char * content, long length);
-      void addContent(std::string & content);
-
-      char * getResponseString();
-      size_t getResponseLength();
+      HTTPFileContentHandler(std::string & filename, artemis::httpd::HTTPContentType contentType);
+      ~HTTPFileContentHandler();
+      artemis::httpd::HTTPResponse * handleRequest(const artemis::httpd::HTTPRequest & request);
 
     private:
-      artemis::httpd::HTTPResponseCode _httpResponseCode;
-      artemis::httpd::HTTPContentType _httpContentType;
-
-      char * _httpResponseContent;
-
-      long _httpResponseContentLength;
-      long _httpResponseLength;
-
-      std::string * getResponseHeader();
+      std::string _filename;
+      artemis::httpd::HTTPContentType _contentType;
     };
   }
 }

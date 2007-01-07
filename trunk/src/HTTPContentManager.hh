@@ -41,10 +41,10 @@ namespace artemis
       void addDirectoryContent(std::string request, std::string directory);
       void addContentHandler(std::string request, artemis::httpd::HTTPContentHandler * contentHandler);
 
-      artemis::httpd::HTTPResponse * handleRequest(artemis::httpd::HTTPRequest * request);
+      artemis::httpd::HTTPResponse * handleRequest(const artemis::httpd::HTTPRequest & request);
 
     private:
-      std::map<std::string, std::string> * _contentMap;
+      std::map<std::string, artemis::httpd::HTTPContentHandler *> * _contentMap;
     };
   }
 }

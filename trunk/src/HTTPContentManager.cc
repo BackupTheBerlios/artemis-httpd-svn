@@ -20,38 +20,59 @@
 
 #include "HTTPContentManager.hh"
 
+#include <iostream>
+
 artemis::httpd::HTTPContentManager::HTTPContentManager()
 {
-  _contentMap = new std::map<std::string, std::string>();
+  _contentMap = new std::map<std::string, artemis::httpd::HTTPContentHandler *>();
 }
 
 artemis::httpd::HTTPContentManager::~HTTPContentManager()
 {
-  delete _contentMap;
+  if (_contentMap)
+    {
+      delete _contentMap;
+    }
 }
 
 void 
 artemis::httpd::HTTPContentManager::addFileContent(std::string request, std::string filename)
 {
-  (*_contentMap)[request] = filename;
+  //  (*_contentMap)[request] = filename;
 }
 
 void 
 artemis::httpd::HTTPContentManager::addDirectoryContent(std::string request, std::string directory)
 {
-  (*_contentMap)[request] = directory;
+  //  (*_contentMap)[request] = directory;
 }
 
 void 
 artemis::httpd::HTTPContentManager::addContentHandler(std::string request, artemis::httpd::HTTPContentHandler * contentHandler)
 {
+  (*_contentMap)[request] = contentHandler;
 }
 
 artemis::httpd::HTTPResponse * 
-artemis::httpd::HTTPContentManager::handleRequest(artemis::httpd::HTTPRequest * request)
+artemis::httpd::HTTPContentManager::handleRequest(const artemis::httpd::HTTPRequest & request)
 {
-  artemis::httpd::HTTPResponse * response = new artemis::httpd::HTTPResponse(HTTP_RESPONSE_CODE_OKAY);
-  std::string content = "<html>\n<head><title>Test</title></head></html>";
-  response->addContent(content);
+  std::string requestURI = request.getRequestURI();
+
+  artemis::httpd::HTTPResponse * response;
+
+  std::cout << "HTTPContentManager.cc: ***" << requestURI << "***" << std::endl;
+  
+  if (_contentMap->count(requestURI) == 0)
+    {
+      response = new artemis::httpd::HTTPResponse(HTTP_RESPONSE_CODE_NOT_FOUND, TEXT_HTML);
+      std::string notfound = "<html>\n<head><title>NOT FOUND</title></head></html>";
+      response->addContent(notfound);
+    }
+  else
+    {
+      artemis::httpd::HTTPContentHandler * contentHandler = (*_contentMap)[requestURI];
+      response = contentHandler->handleRequest(request);
+    }
+
   return response;
 }

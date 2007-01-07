@@ -48,7 +48,7 @@ namespace artemis
       HTTPRequest(std::string & request_str);
       ~HTTPRequest();
 
-      std::string getRequestURI();
+      std::string getRequestURI() const;
 
     private:
       // request fields

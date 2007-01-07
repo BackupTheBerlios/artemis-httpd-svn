@@ -33,7 +33,7 @@ namespace artemis
 {
   namespace httpd
   {
-    class HTTPConnection : artemis::util::Thread
+    class HTTPConnection : public artemis::util::Thread
     {
     public:
       HTTPConnection(int fd, artemis::httpd::HTTPContentManager * contentManager);
