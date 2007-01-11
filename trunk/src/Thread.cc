@@ -18,39 +18,26 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#ifndef ARTEMIS_UTIL_THREAD_HH
-#define ARTEMIS_UTIL_THREAD_HH
+#include <Thread.hh>
 
-#include <pthread.h>
-
-namespace artemis
+extern "C"
 {
-  namespace util
-  {
-    class Thread
-    {
-    public:
-      Thread();
-
-      virtual ~Thread()
-      {
-      }
-
-    protected:
-      virtual void * run() = 0;
-
-      void start();
-
-    private:
-      pthread_t _thread;
-
-      static void* thread_call(Thread * _this) 
-      { 
-	pthread_exit(_this->run());  
-	return 0; 
-      }
-    };
-  }
+  typedef void * (*thread_fct)(void *);
 }
 
-#endif
+artemis::util::Thread::Thread()
+  : _thread(0)
+{
+}
+
+void 
+artemis::util::Thread::start()
+{
+  pthread_attr_t attr;
+  pthread_attr_init(&attr);
+  pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+
+  pthread_create(&_thread, &attr, (thread_fct) thread_call, this);
+
+  pthread_attr_destroy(&attr);
+}
