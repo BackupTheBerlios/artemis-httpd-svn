@@ -44,7 +44,7 @@ namespace artemis
     private:
       pthread_t _thread;
 
-      static void* thread_call(Thread * _this) 
+      static void* thread_call(artemis::util::Thread * _this) 
       { 
 	pthread_exit(_this->run());  
 	return 0; 
